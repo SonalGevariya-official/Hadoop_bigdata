@@ -1,0 +1,40 @@
+-----DEMO 1------
+hbase shell
+
+list 
+
+create 'user', 'username'
+
+scan 'user'
+
+create 'user', 'r1', 'username', 'thomas'
+create 'user', 'r2', 'username', 'tsmith'
+
+scan 'user'
+
+disable 'user'
+
+drop 'user'
+
+list
+
+----Demo 2-------
+hdfs dfs -ls /user/thenson/stock_values/app_daily.csv
+
+hbase shell
+
+create 'app_stock', 'info'
+
+scan 'app_stock'
+
+a = LOAD '/user/thenson/stock_values/appl_daily.csv' USING
+PigStorage(',') as (date:chararray, open:chararray, high:chararray, low:chararray, close:chararray, volume:chararray, adj_close:chararray);
+
+STORE a INTO 'hbase://app_stock' USING org.apache.pig.backend.hadoop.hbase.HBaseStorage('info:open info:high info:low info:close info:volume info:adj_close');
+
+pig -f hbase-load.pig
+
+scan 'app_stock' {'LIMIT' => 5}
+
+
+

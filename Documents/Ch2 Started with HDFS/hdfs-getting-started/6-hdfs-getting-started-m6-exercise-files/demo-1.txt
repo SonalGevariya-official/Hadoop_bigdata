@@ -1,0 +1,56 @@
+vim 
+sudo yum install vim
+--------First Script----------
+#!/bin/bash
+hdfs dfs -ls
+--------End First Script-------
+chmod +x hdfs-move.sh
+
+./hdfs-move.sh
+
+----Second Script-----------
+#!/bin/bash
+hdfs dfs -put /home/thenson/appl_daily.csv /user/thenson/appl_daily.csv
+hdfs dfs -put /home/thenson/nasdaq_daily.csv /user/thenson/nasdaq_daily.csv
+hdfs dfs -ls
+
+/make directory in HDFS
+hdfs dfs -mkdir /user/thenson/stock_daily
+
+//move files into HDFS
+hdfs dfs -put /home/thenson/appl_daily.csv /user/thenson/appl_daily.csv
+hdfs dfs -put /home/thenson/nasdaq_daily.csv /user/thenson/nasdaq_daily.csv
+
+//verify files have been moved
+
+
+//take input
+
+
+-----End Second Script--------
+
+----
+#!/bin/bash
+
+stocks="/home/thenson/stock_values/*"
+for stock in $stocks
+do
+        hdfs dfs -put $stock /user/thenson/stock_values/$(basename $stock)
+        echo "ingesting  $(basename $stock)"
+done
+
+hdfs dfs -ls /user/thenson/stock_values
+
+--
+  
+
+./hdfs-move.sh
+
+
+--sample script---
+files="/tmp/j*"
+
+for fileName in $files
+do
+	echo "$fileName"
+done

@@ -1,0 +1,64 @@
+﻿Hadoop in Ubuntu 
+
+1) How to install and setup?
+Will See later on :D
+
+2) Java_home = it is usually in /usr/lib/jvm
+3)  After installation and seeting java_home path,
+
+> cd hadoop-3.0.0/etc/hadoop
+> ls -l 
+here u find ‘hadoop-env.sh’ in list 
+> nano hadoop-env.sh
+		add in last below cade :
+			- export JAVA_HOME=/usr/lib/jvm/openjdk-8
+			- export HADOOP_PREFIX=/backup_windows/Hadoop/hadoop-3.0.0
+
+press ctrl + X 
+press y
+press enter 
+> nano etc/hadoop/core-site.xml or > nano core-site.xml
+add below code in that file :
+<configuration>
+<property>
+<name>fs.defaultFS</name>
+<value>hdfs://localhost:9000</value>
+</property>
+</configuration>
+
+> nano etc/hadoop/hdfs-site.xml or > nano hdfs-site.xml
+add below code in that file :
+<configuration>
+<property>
+<name>fs.replication</name>
+<value>1</value>
+</property>
+</configuration>
+> nano mapred-site.xml
+add below code in that file :
+<configuration>
+<property>
+<name>mapreduce.framework.name</name>
+<value>yarn</value>
+</property>
+</configuration>
+Here above in value – classic – MapReduce version 2
+   		  - loacl -running MapReduce locally (for standAlone)
+   		  - yarn – MapReduce version 2 (for pseduo)
+
+> nano yarn-site.xml
+add below code in that file :
+<configuration>
+<property>
+<name>yarn.nodemanager.aux-services</name>
+<value>mapreduce_shuffle</value>
+</property>
+</configuration>
+Here above in value – classic – MapReduce version 2
+   		  - loacl -running MapReduce locally (for standAlone)
+   		  - yarn – MapReduce version 2 (for pseduo)
+
+
+4) NameNode : 
+ ~/hadoop-3.0.0
+> bin/hdfs namenode -format

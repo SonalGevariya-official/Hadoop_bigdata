@@ -1,0 +1,45 @@
+demo 1
+-----
+mysql
+
+show databases;
+
+use test;
+
+show grants;
+
+show tables;
+
+SELECT * FROM nasdaq_daily;
+
+SELECT * FROM nasdaq_daily LIMIT 10;
+
+describe nasdaq_daily;
+
+quit;
+
+-----
+demo 2
+------
+
+hdfs dfs -ls /user/thenson
+
+sqoop list-tables --connect jdbc:mysql://localhost/test
+
+
+sqoop import --connect jdbc:mysql://localhost/test --table nasdaq_daily -m 1
+
+hdfs dfs -ls /user/thenson
+
+hdfs dfs -ls /user/thenson/nasdaq_daily
+
+hdfs dfs -cat /user/thenson/nasdaq_daily/p*
+
+
+sqoop import --connect jdbc:mysql://localhost/test --query 'SELECT * FROM nasdaq_daily WHERE low < 15 AND $CONDITIONS' -m 1 --target-dir /user/thenson/sqoop
+
+hdfs dfs -ls /user/thenson/sqoop
+
+hdfs dfs -ls /user/thenson/sqoop/nasdaq_daily
+
+hdfs dfs -cat /user/thenson/nasdaq_daily/p*
