@@ -1,0 +1,6 @@
+index_raw = LOAD '/tmp/NDX-100.csv' USING PigStorage(',') AS 
+(date:datetime, open:int, high:int, low:int, close:int, volume:int, adj_close:int);
+
+index_values = FOREACH index_raw GENERATE (date, low);
+
+DUMP index_limit;
